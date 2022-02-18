@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CircleViewModel()),
       ],
       child: MaterialApp(
+        title: 'flutter tasks',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
