@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/send_message.dart';
+import 'package:flutter_application_1/screens/circle_screen.dart';
 import 'package:flutter_application_1/view_models/circle_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SendMessage(),
+        home: CircleScreen(),
       ),
     );
   }
