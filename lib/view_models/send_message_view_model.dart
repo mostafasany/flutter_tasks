@@ -38,6 +38,7 @@ class SendMessageViewModel extends ChangeNotifier {
     }
 
     locationData = await location.getLocation();
+    notifyListeners();
   }
 
   File? pickedMedia;
@@ -67,9 +68,10 @@ class SendMessageViewModel extends ChangeNotifier {
     } else if (media != null) {
       pickedMedia = File(media.path);
     }
+    notifyListeners();
   }
 
-  File? _recordedVoice;
+  File? recordedVoice;
 
   Codec _codec = Codec.aacMP4;
   FlutterSoundRecorder? mRecorder = FlutterSoundRecorder();
@@ -83,11 +85,11 @@ class SendMessageViewModel extends ChangeNotifier {
     String uniqueKey = UniqueKey().toString();
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
-    _recordedVoice = File("$tempPath/$uniqueKey.aac");
+    recordedVoice = File("$tempPath/$uniqueKey.aac");
 
     mRecorder!
         .startRecorder(
-      toFile: _recordedVoice!.path,
+      toFile: recordedVoice!.path,
       codec: _codec,
       audioSource: theSource,
     )
@@ -100,7 +102,7 @@ class SendMessageViewModel extends ChangeNotifier {
     if (!kIsWeb) {
       var status = await Permission.microphone.request();
       if (status != PermissionStatus.granted) {
-        print('granted');
+        print('not granted');
         throw RecordingPermissionException('Microphone permission not granted');
       }
     }
