@@ -13,7 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 const theSource = AudioSource.microphone;
 
 class SendMessageViewModel extends ChangeNotifier {
-  loc.LocationData? _locationData;
+  loc.LocationData? locationData;
 
   pickLocation() async {
     loc.Location location = loc.Location();
@@ -37,10 +37,10 @@ class SendMessageViewModel extends ChangeNotifier {
       }
     }
 
-    _locationData = await location.getLocation();
+    locationData = await location.getLocation();
   }
 
-  File? _pickedMedia;
+  File? pickedMedia;
   pickMedia(
       {bool isCapture = false,
       bool isVideo = false,
@@ -63,9 +63,9 @@ class SendMessageViewModel extends ChangeNotifier {
       );
     }
     if (result != null && result.files.single.path != null) {
-      _pickedMedia = File(result.files.single.path!);
+      pickedMedia = File(result.files.single.path!);
     } else if (media != null) {
-      _pickedMedia = File(media.path);
+      pickedMedia = File(media.path);
     }
   }
 

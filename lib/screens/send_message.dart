@@ -24,6 +24,15 @@ class _SendMessageState extends State<SendMessage> {
       body: LayoutBuilder(
         builder: (context, constraints) => Stack(
           children: [
+            Consumer<SendMessageViewModel>(
+                builder: (_, sendMessageViewModel, __) => Column(
+                      children: [
+                        if (sendMessageViewModel.locationData != null)
+                          Text(sendMessageViewModel.locationData.toString()),
+                        if (sendMessageViewModel.pickedMedia != null)
+                          Text(sendMessageViewModel.pickedMedia!.path)
+                      ],
+                    )),
             Positioned(
               bottom: 0,
               child: SizedBox(
