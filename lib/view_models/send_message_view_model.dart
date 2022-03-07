@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,8 +8,12 @@ import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:location/location.dart' as loc;
+import 'package:mime/mime.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 const theSource = AudioSource.microphone;
 
@@ -42,6 +47,15 @@ class SendMessageViewModel extends ChangeNotifier {
   }
 
   File? pickedMedia;
+  String? checkMediaType() {
+    if (pickedMedia != null) {
+      final String mediaType =
+          lookupMimeType(pickedMedia!.path)!.split('/').first;
+      return mediaType;
+    }
+    return null;
+  }
+
   pickMedia(
       {bool isCapture = false,
       bool isVideo = false,
@@ -65,9 +79,12 @@ class SendMessageViewModel extends ChangeNotifier {
     }
     if (result != null && result.files.single.path != null) {
       pickedMedia = File(result.files.single.path!);
+      print(checkMediaType());
     } else if (media != null) {
       pickedMedia = File(media.path);
+      print(checkMediaType());
     }
+
     notifyListeners();
   }
 
@@ -107,5 +124,34 @@ class SendMessageViewModel extends ChangeNotifier {
       }
     }
     await mRecorder!.openAudioSession();
+  }
+
+  File? videoThumbnail;
+  Future<void> getThumbnail(String url) async {
+    final filePath = await VideoThumbnail.thumbnailFile(
+      video: url,
+      thumbnailPath: (await getTemporaryDirectory()).path,
+      imageFormat: ImageFormat
+          .PNG, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      quality: 100,
+    );
+    if (filePath != null) {
+      videoThumbnail = File(filePath);
+    }
+    notifyListeners();
+  }
+
+  void launchURL(String url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
+  }
+
+  openFile() {
+    OpenFile.open(pickedMedia!.path);
+  }
+
+  String? text;
+  set setText(String value) {
+    text = value;
+    notifyListeners();
   }
 }
