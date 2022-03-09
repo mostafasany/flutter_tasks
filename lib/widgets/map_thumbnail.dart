@@ -22,7 +22,7 @@ class MapThumbnailImage extends StatelessWidget {
         'zoom': '18',
         'size': '600x300',
         'maptype': 'roadmap',
-        'key': 'AIzaSyAxID_nKial_3S1YlJPEonzqKaJhLPQ2D8',
+        'key': 'Map Key',
         'markers': 'color:red|$latitude,$longitude'
       },
     );
