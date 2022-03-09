@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +19,7 @@ const theSource = AudioSource.microphone;
 class SendMessageViewModel extends ChangeNotifier {
   loc.LocationData? locationData;
 
-  pickLocation() async {
+  Future<void> pickLocation() async {
     loc.Location location = loc.Location();
 
     bool _serviceEnabled;

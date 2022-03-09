@@ -25,10 +25,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     if (_isInit) {
       _isLoading = true;
       Future.delayed(Duration.zero, () {
-        print('init');
         _controller = VideoPlayerController.network(widget.link)
           ..addListener(() {
-            print(_isLoading);
             setState(() {});
           })
           ..setLooping(false)

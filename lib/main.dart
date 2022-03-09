@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/send_message.dart';
+import 'package:flutter_application_1/screens/finance_quote_screen.dart';
 import 'package:flutter_application_1/view_models/circle_view_model.dart';
 import 'package:flutter_application_1/view_models/send_message_view_model.dart';
+import 'package:flutter_application_1/view_models/weather_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CircleViewModel()),
         ChangeNotifierProvider(create: (_) => SendMessageViewModel()),
+        Provider(create: (_) => WeatherViewModel()),
       ],
       child: MaterialApp(
         title: 'flutter tasks',
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SendMessage(),
+        home: FinanceQuoteScreen(),
       ),
     );
   }

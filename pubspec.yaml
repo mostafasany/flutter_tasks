@@ -41,6 +41,7 @@ dependencies:
   url_launcher: ^6.0.10
   video_player: ^2.2.3
   video_thumbnail: ^0.4.6
+  weather: ^2.0.1
 
 dev_dependencies:
   flutter_test:
